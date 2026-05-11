@@ -18,17 +18,36 @@ const cartPopup = document.getElementById("cartPopup");
 
 const closeCart = document.getElementById("closeCart");
 
+// OPEN CART
+
 cartIcon.onclick = () => {
 
   cartPopup.classList.add("active");
 
 };
 
+// CLOSE CART
+
 closeCart.onclick = () => {
 
   cartPopup.classList.remove("active");
 
 };
+
+// CLOSE WHEN CLICK OUTSIDE
+
+window.addEventListener("click", (e) => {
+
+  if(
+    !cartPopup.contains(e.target) &&
+    !cartIcon.contains(e.target)
+  ){
+
+    cartPopup.classList.remove("active");
+
+  }
+
+});
 
 // ADD TO CART
 
@@ -133,6 +152,68 @@ wishlist.forEach(heart => {
   });
 
 });
+
+// ORDER BUTTON
+
+const orderBtn = document.getElementById("orderBtn");
+
+orderBtn.onclick = () => {
+
+  if(count === 0){
+
+    showNotification("Your cart is empty!");
+
+  }else{
+
+    showNotification("Order Placed Successfully ✅");
+
+    cartItems.innerHTML = "";
+
+    count = 0;
+
+    totalPrice = 0;
+
+    cartCount.innerText = 0;
+
+    total.innerText = 0;
+
+    cartPopup.classList.remove("active");
+
+  }
+
+};
+
+// CUSTOM NOTIFICATION
+
+function showNotification(message){
+
+  const notification = document.createElement("div");
+
+  notification.classList.add("notification");
+
+  notification.innerText = message;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+
+    notification.classList.add("show");
+
+  },100);
+
+  setTimeout(() => {
+
+    notification.classList.remove("show");
+
+    setTimeout(() => {
+
+      notification.remove();
+
+    },500);
+
+  },2500);
+
+}
 
 // NAVBAR HIDE ON SCROLL
 
